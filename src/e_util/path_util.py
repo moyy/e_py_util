@@ -51,25 +51,3 @@ def parse_path(path: str) -> PathInfo:
         "file": file,
         "extension": extension,
     }
-
-# ================= test =================
-
-
-def _test_join_path():
-    path = join_path("D:/path_1", "path_2\\", "file.txt")
-    assert(path == "D:/path_1/path_2/file.txt")
-
-
-def _test_parse_path():
-    info = parse_path("D:/path_1\\path_2/file.txt")
-
-    assert(info["dir"] == "D:/path_1/path_2")
-    assert(info["file"] == "file")
-    assert(info["extension"] == ".txt")
-
-
-if __name__ == "__main__":
-    _test_join_path()
-    _test_parse_path()
-
-    print("test::path_util.py::ok!")

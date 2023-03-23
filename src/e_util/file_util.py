@@ -1,13 +1,26 @@
 """
 # 目录操作
 
++ `is_path_exist(path: str) -> bool` 判断路径是否存在
++ `make_dir(path: str, exist_ok=True, recursive=True)` 创建目录，参数有 是否递归，存在是否报错
++ `remove_files(path: str)` 删除 path；如果是目录，递归删除
++ `iter_dir(root: str, recursive: bool = True) -> Iterable[str]` 遍历目录，参数有 是否递归
 
+# 文件操作
+
++ `read_file_as_str(path: str, encoding="utf-8") -> str` 读取文件为字符串
++ `write_str_as_file(path: str, content: str, encoding="utf-8")` 写字符串到文件
++ `append_str_as_file(path: str, content: str, encoding="utf-8")` 追加字符串到文件
+
++ `read_file_as_bytes(path: str) -> bytes` 读取文件为bytes
++ `write_bytes_as_file(path: str, content: bytes)` 写bytes到文件
++ `append_bytes_as_file(path: str, content: bytes)` 追加bytes到文件
 """
 
 import os
 import shutil
 from typing import Iterable
-from path_util import join_path
+from .path_util import join_path
 
 
 def is_path_exist(path: str) -> bool:
@@ -87,44 +100,3 @@ def append_bytes_as_file(path: str, content: bytes):
     """ 追加bytes到文件"""
     with open(path, 'ab') as f:
         f.write(content)
-
-# ================= test =================
-
-
-def _test_make_dir():
-    root_name = "test_dir"
-    make_dir(root_name)
-    assert(is_path_exist(root_name))
-
-    dir_name = f"{root_name}/test_dir_1/test_dir_2/"
-    make_dir(dir_name, exist_ok=True, recursive=True)
-    assert(is_path_exist(dir_name))
-
-
-def _test_remove_dir():
-    root_name = "test_dir"
-    remove_files(root_name)
-    assert(not is_path_exist(root_name))
-
-
-def _test_file():
-    file_name = "test_dir/test_dir_1/test_dir_2/test_file.txt"
-    content = "test file"
-    write_str_as_file(file_name, content)
-    assert(is_path_exist(file_name))
-
-    content = read_file_as_str(file_name)
-    assert(content == content)
-
-    expect_content = f"{content}{content}"
-    append_str_as_file(file_name, content)
-    content = read_file_as_str(file_name)
-    assert(content == expect_content)
-
-
-if __name__ == '__main__':
-    _test_make_dir()
-
-    _test_file()
-
-    _test_remove_dir()

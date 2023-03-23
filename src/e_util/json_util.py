@@ -58,32 +58,3 @@ def to_file(file_path: str, data: None | int | float | str | list | dict, encodi
         else:
             json.dump(data, f, ensure_ascii=False, sort_keys=True,
                       indent=4, separators=(',', ':'))
-
-# ================= test =================
-
-
-def _test_dict():
-    data = {
-        "name": "张三",
-        "age": 18,
-        "is_man": False,
-        "option": None,
-        "list": [1, 2, 3, 4, 5],
-        "dict": {
-            "a": 1,
-            "b": 2,
-        }
-    }
-
-    json_str = to_string(data)
-    data_2 = from_string(json_str)
-
-    assert(data == data_2)
-    print(f"json_str = {json_str}")
-    print(f"data_2 = {data_2}")
-
-
-if __name__ == "__main__":
-    _test_dict()
-    
-    print("test::json_util.py::ok!")
